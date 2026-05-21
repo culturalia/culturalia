@@ -6,7 +6,7 @@ import { schemaTypes } from './schemas';
 export default defineConfig({
   name: 'culturalia',
   title: 'Culturalia — Studio',
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'PREENCHER_DEPOIS',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'hsr0zxgk',
   dataset: 'production',
   plugins: [structureTool(), visionTool()],
   schema: { types: schemaTypes },
