@@ -4,6 +4,29 @@
 >
 > Este arquivo aqui é a **documentação técnica para desenvolvedores**.
 
+---
+
+## Status atual (configurado em 21/05/2026)
+
+| Serviço | Status | URL / Referência |
+|---------|--------|-----------------|
+| Site ao vivo (Vercel) | ✅ Ativo | https://culturalia.vercel.app |
+| Domínio próprio | ⏳ DNS propagando | https://culturalia.art.br |
+| Painel de conteúdo (Sanity Studio) | ✅ Ativo | https://culturalia.sanity.studio |
+| Repositório do código | ✅ Ativo | https://github.com/culturalia/culturalia |
+| Google Analytics 4 | ✅ Configurado | ID: `G-EJQQE8K20L` — conta Google da Hilary |
+| Webhook Sanity → Vercel | ✅ Ativo | Publicar no Studio dispara rebuild automático |
+| WhatsApp no site | ✅ Configurado | +55 (11) 93618-8087 |
+
+**Contas utilizadas:**
+- **Vercel:** conta `culturalia` (e-mail: contato@culturalia.art.br)
+- **Sanity:** conta Google da Hilary — projeto ID `hsr0zxgk`
+- **GitHub:** https://github.com/culturalia
+- **Hostgator:** domínio `culturalia.art.br` — DNS apontando para `76.76.21.21`
+
+**Variáveis de ambiente já configuradas na Vercel** (não precisa setar de novo):
+`PUBLIC_SANITY_PROJECT_ID` · `PUBLIC_SANITY_DATASET` · `PUBLIC_SANITY_API_VERSION` · `PUBLIC_GA_MEASUREMENT_ID` · `PUBLIC_WHATSAPP_NUMBER`
+
 Site estático da **Culturalia Produções** — produtora artística e cultural sediada em São Paulo/SP.
 
 Construído com **Astro + Sanity (CMS) + Vercel**.
@@ -228,15 +251,15 @@ Para automatizar:
 
 ## Pendências (a completar com a cliente)
 
-Mantenha estas informações em mente — preencher no `config.ts` ou via Sanity:
+Preencher no `config.ts` ou via Sanity Studio:
 
 - [ ] **Ficha técnica** dos espetáculos `Jazz It Up` e `Liberdade, Liberdade — O Musical`
   (ano, teatro, duração, elenco principal) → editar em `src/lib/config.ts` ou cadastrar no Sanity
 - [ ] **Fotos** dos espetáculos → colocar em `public/images/portfolio/` e referenciar no card
 - [ ] **Foto + mini-bio** da Hilary → colocar em `public/images/equipe/hilary.jpg` e atualizar `FOUNDER.bio` em `config.ts`
-- [ ] **GA4 Measurement ID** → criar propriedade em https://analytics.google.com e adicionar no `.env`
 - [ ] **Logo em SVG** (mais leve e nítido em qualquer tamanho) — pedir para a designer
 - [ ] Revisão dos textos legais (Política de Privacidade e Termos de Uso) por advogado
+- [ ] Verificar domínio `culturalia.art.br` após propagação DNS (pode levar até 24h a partir de 21/05/2026)
 
 ---
 
