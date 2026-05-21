@@ -1,4 +1,4 @@
-# Oi, Hilary! 👋
+# Oi, Hílary! 👋
 
 Esse é o **seu** site da Culturalia. Bora deixar ele no ar?
 

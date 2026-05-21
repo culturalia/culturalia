@@ -6,7 +6,7 @@
 
 ## Quem está do outro lado
 
-A usuária deste Claude Code é **Hilary**, fundadora da Culturalia Produções. Ela:
+A usuária deste Claude Code é **Hílary**, fundadora da Culturalia Produções. Ela:
 
 - **Não programa**. Nunca programou. Não sabe o que é "função", "variável", "deploy", "commit", "branch", "build", etc.
 - É **produtora cultural**. Conhece teatro, dança, música, captação, gestão de elenco, eventos.
@@ -25,7 +25,7 @@ A usuária deste Claude Code é **Hilary**, fundadora da Culturalia Produções.
 
 Site institucional da **Culturalia Produções** — produtora artística com sede em São Paulo.
 
-**Stack** (você só usa essa info pra decidir onde mexer; **nunca** apresente esses termos à Hilary):
+**Stack** (você só usa essa info pra decidir onde mexer; **nunca** apresente esses termos à Hílary):
 
 | Camada       | Tecnologia                                      |
 |--------------|-------------------------------------------------|
@@ -273,7 +273,7 @@ Antes de assumir, leia:
 
 - **Desenvolvedor**: Guilherme Ponsoni — `guilherme.ponsoni@upoutsourcing.com`
 - **Repositório**: https://github.com/Guiradi/culturalia
-- **Conta GitHub da Hilary**: (a ser confirmada — provavelmente `Guiradi`)
+- **Conta GitHub da Hílary**: (a ser confirmada — provavelmente `Guiradi`)
 - **Painel Vercel**: https://vercel.com/dashboard (depois do setup)
 - **Painel Sanity**: https://sanity.io/manage (depois do setup)
 - **Studio Sanity**: URL fica em `.claude/.setup-state.json` (`sanityStudioUrl`) depois do setup.
@@ -282,7 +282,7 @@ Antes de assumir, leia:
 
 ## Resumo executivo (TL;DR pra você lembrar)
 
-1. **Hilary não programa**. Linguagem leiga, PT-BR, tutela, sem jargão.
+1. **Hílary não programa**. Linguagem leiga, PT-BR, tutela, sem jargão.
 2. **Use AskUserQuestion** muito. Cada decisão importante = uma pergunta com opções.
 3. **`/setup`** pra configurar tudo do zero. **`/editar`** pro dia-a-dia. Sugira esses atalhos quando se encaixarem.
 4. **Texto publica direto** (via `/editar`). **Foto/cor/layout confirma antes**.

@@ -41,9 +41,9 @@ export const NAV = [
 ] as const;
 
 export const FOUNDER = {
-  name: 'Hilary',
+  name: 'Hílary Silva',
   role: 'Diretora Artística e Fundadora',
-  bio: 'Apaixonada por teatro e dança, Hilary fundou a Culturalia em 2019 com o propósito de democratizar o acesso à arte e à cultura no Brasil. Sob sua direção, a produtora se consolidou como uma comunidade de amantes da arte, transformando cada apresentação em uma celebração única.',
+  bio: 'Apaixonada por teatro e dança, Hílary Silva fundou a Culturalia em 2019 com o propósito de democratizar o acesso à arte e à cultura no Brasil. Sob sua direção, a produtora se consolidou como uma comunidade de amantes da arte, transformando cada apresentação em uma celebração única.',
 } as const;
 
 export const SERVICES = [

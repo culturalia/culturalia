@@ -1,6 +1,6 @@
 # Culturalia — Site Institucional
 
-> 👋 **É a Hilary?** Abre o arquivo [`HILARY.md`](./HILARY.md) — tem o passo-a-passo simples pra você começar (instalar 3 programas, clonar o site, rodar `/setup` no Claude Code, pronto).
+> 👋 **É a Hílary?** Abre o arquivo [`HILARY.md`](./HILARY.md) — tem o passo-a-passo simples pra você começar (instalar 3 programas, clonar o site, rodar `/setup` no Claude Code, pronto).
 >
 > Este arquivo aqui é a **documentação técnica para desenvolvedores**.
 
@@ -14,13 +14,13 @@
 | Domínio próprio | ⏳ DNS propagando | https://culturalia.art.br |
 | Painel de conteúdo (Sanity Studio) | ✅ Ativo | https://culturalia.sanity.studio |
 | Repositório do código | ✅ Ativo | https://github.com/culturalia/culturalia |
-| Google Analytics 4 | ✅ Configurado | ID: `G-EJQQE8K20L` — conta Google da Hilary |
+| Google Analytics 4 | ✅ Configurado | ID: `G-EJQQE8K20L` — conta Google da Hílary |
 | Webhook Sanity → Vercel | ✅ Ativo | Publicar no Studio dispara rebuild automático |
 | WhatsApp no site | ✅ Configurado | +55 (11) 93618-8087 |
 
 **Contas utilizadas:**
 - **Vercel:** conta `culturalia` (e-mail: contato@culturalia.art.br)
-- **Sanity:** conta Google da Hilary — projeto ID `hsr0zxgk`
+- **Sanity:** conta Google da Hílary — projeto ID `hsr0zxgk`
 - **GitHub:** https://github.com/culturalia
 - **Hostgator:** domínio `culturalia.art.br` — DNS apontando para `76.76.21.21`
 
@@ -143,7 +143,7 @@ Arquivo único: **`src/lib/config.ts`**
 - `CONTACT` — WhatsApp, e-mail, mensagem padrão
 - `SOCIAL` — Instagram (e outras redes futuras)
 - `NAV` — itens do menu
-- `FOUNDER` — bio da Hilary
+- `FOUNDER` — bio da Hílary
 - `SERVICES` — lista de 5 serviços
 - `FEATURED_SHOWS` — espetáculos do portfólio
 
@@ -183,7 +183,7 @@ npm run dev
 npm run deploy
 ```
 
-Após o deploy, a Hilary acessa `https://culturalia.sanity.studio` (ou a URL escolhida) para criar/editar eventos e espetáculos. O site Astro busca esses dados em build time.
+Após o deploy, a Hílary acessa `https://culturalia.sanity.studio` (ou a URL escolhida) para criar/editar eventos e espetáculos. O site Astro busca esses dados em build time.
 
 ---
 
@@ -256,7 +256,7 @@ Preencher no `config.ts` ou via Sanity Studio:
 - [ ] **Ficha técnica** dos espetáculos `Jazz It Up` e `Liberdade, Liberdade — O Musical`
   (ano, teatro, duração, elenco principal) → editar em `src/lib/config.ts` ou cadastrar no Sanity
 - [ ] **Fotos** dos espetáculos → colocar em `public/images/portfolio/` e referenciar no card
-- [ ] **Foto + mini-bio** da Hilary → colocar em `public/images/equipe/hilary.jpg` e atualizar `FOUNDER.bio` em `config.ts`
+- [ ] **Foto + mini-bio** da Hílary → colocar em `public/images/equipe/hilary.jpg` e atualizar `FOUNDER.bio` em `config.ts`
 - [ ] **Logo em SVG** (mais leve e nítido em qualquer tamanho) — pedir para a designer
 - [ ] Revisão dos textos legais (Política de Privacidade e Termos de Uso) por advogado
 - [ ] Verificar domínio `culturalia.art.br` após propagação DNS (pode levar até 24h a partir de 21/05/2026)
