@@ -11,7 +11,7 @@
 | Serviço | Status | URL / Referência |
 |---------|--------|-----------------|
 | Site ao vivo (Vercel) | ✅ Ativo | https://culturalia.vercel.app |
-| Domínio próprio | ⏳ DNS propagando | https://culturalia.art.br |
+| Domínio próprio | ✅ Ativo | https://culturalia.art.br |
 | Painel de conteúdo (Sanity Studio) | ✅ Ativo | https://culturalia.sanity.studio |
 | Repositório do código | ✅ Ativo | https://github.com/culturalia/culturalia |
 | Google Analytics 4 | ✅ Configurado | ID: `G-EJQQE8K20L` — conta Google da Hílary |
@@ -233,19 +233,6 @@ Para automatizar:
 3. No Sanity, vá em **API → Webhooks → Create**.
 4. Cole a URL, marque triggers para os types `event` e `show`.
 5. Pronto: cada edição publicada no Studio dispara rebuild automático.
-
----
-
-## Checklist pós-deploy
-
-- [ ] Site responde em `https://culturalia.art.br`
-- [ ] SSL (cadeado) está ativo
-- [ ] `https://www.culturalia.art.br` redireciona para a versão sem `www`
-- [ ] Botão WhatsApp abre conversa corretamente no celular
-- [ ] Google Analytics está recebendo eventos (verificar em "Em tempo real")
-- [ ] `sitemap.xml` acessível em `https://culturalia.art.br/sitemap-index.xml`
-- [ ] Compartilhar em WhatsApp/Instagram exibe o card OG corretamente
-- [ ] Lighthouse score 90+ em todas categorias
 
 ---
 

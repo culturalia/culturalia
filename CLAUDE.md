@@ -110,9 +110,9 @@ Cada opção deve:
 
 ---
 
-## Os subagentes `/setup` e `editor-culturalia`
+## Os subagentes `/setup`, `editor-culturalia` e `pendencias-culturalia`
 
-Existem dois subagentes especializados. **Use-os proativamente — não espere ela digitar um slash command.**
+Existem três subagentes especializados. **Use-os proativamente — não espere ela digitar um slash command.**
 
 ### `/setup` — quando sugerir
 
@@ -164,6 +164,32 @@ Quando o subagente `editor-culturalia` terminar, **NÃO pergunte como publicar n
 - Opção 2: **"Tem mais coisa"** — invoca o subagente novamente com o novo pedido.
 
 Após o push, só diz: "Pronto! O site atualiza em ~2 minutos. ✅" — sem explicar CI, Vercel, deploy, etc.
+
+### `pendencias-culturalia` — INVOQUE AUTOMATICAMENTE quando ela perguntar sobre pendências
+
+**REGRA**: quando a Hílary perguntar o que ainda falta ou o que ela precisa fornecer pro site, invoque o subagente `pendencias-culturalia` diretamente via `Agent`. **Não espere ela digitar nenhum comando**.
+
+Frases que devem disparar a invocação (mesmo que não sejam exatamente essas):
+- "o que falta"
+- "o que preciso te responder"
+- "quais são as pendências"
+- "o que ainda tá pendente"
+- "o que eu preciso fazer"
+- "tem alguma coisa pra eu preencher"
+- "o que falta pro site ficar completo"
+- "tem informação que você precisa de mim"
+- Qualquer pergunta sobre o que ela ainda precisa fornecer, preencher ou entregar
+
+**Como invocar**:
+```
+Agent(
+  subagent_type="pendencias-culturalia",
+  description="Coletar pendências da Hílary",
+  prompt="A Hílary quer saber o que ainda falta pra completar o site. Comece pelo primeiro item pendente."
+)
+```
+
+O subagente mantém estado em `.claude/.pending-state.json`. Cada invocação retoma de onde parou.
 
 ### Quando NÃO invocar o `editor-culturalia`
 
