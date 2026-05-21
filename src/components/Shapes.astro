@@ -1,0 +1,59 @@
+---
+/**
+ * Conjunto de formas decorativas para dispor pelas seções,
+ * inspirado nas "Formas chapadas" da identidade visual.
+ *
+ * Uso:
+ *   <Shapes variant="hero" />
+ *   <Shapes variant="confetti" />
+ *   <Shapes variant="quiet" />
+ */
+interface Props {
+  variant?: 'hero' | 'confetti' | 'quiet' | 'sobre' | 'servicos';
+}
+const { variant = 'confetti' } = Astro.props;
+---
+
+{variant === 'hero' && (
+  <>
+    <span class="shape shape--circle" style="top:8%; left:-2%; width:120px; height:120px; background:var(--color-cyan); opacity:.55"></span>
+    <span class="shape shape--arch" style="top:15%; right:6%; width:90px; height:130px; background:var(--color-mustard);"></span>
+    <span class="shape shape--circle" style="bottom:12%; right:-3%; width:160px; height:160px; background:var(--color-royal); opacity:.18"></span>
+    <span class="shape shape--square" style="bottom:18%; left:8%; width:60px; height:60px; background:var(--color-magenta); transform:rotate(18deg);"></span>
+    <svg class="star" style="top:30%; left:18%; width:48px;" viewBox="0 0 24 24" aria-hidden="true">
+      <polygon points="12,2 14,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 10,9" fill="var(--color-mustard)"/>
+    </svg>
+    <svg class="star" style="bottom:25%; right:25%; width:34px;" viewBox="0 0 24 24" aria-hidden="true">
+      <polygon points="12,3 13.5,10 21,12 13.5,14 12,21 10.5,14 3,12 10.5,10" fill="var(--color-cyan)"/>
+    </svg>
+  </>
+)}
+
+{variant === 'confetti' && (
+  <>
+    <span class="shape shape--circle" style="top:10%; right:5%; width:70px; height:70px; background:var(--color-pink); opacity:.6"></span>
+    <span class="shape shape--square" style="bottom:14%; left:4%; width:48px; height:48px; background:var(--color-magenta); transform:rotate(-12deg);"></span>
+    <span class="shape shape--arch" style="top:40%; left:-2%; width:60px; height:90px; background:var(--color-cyan); opacity:.5"></span>
+  </>
+)}
+
+{variant === 'quiet' && (
+  <>
+    <span class="shape shape--circle" style="top:50%; right:-40px; width:140px; height:140px; background:var(--color-cream-dark); opacity:.5"></span>
+  </>
+)}
+
+{variant === 'sobre' && (
+  <>
+    <span class="shape shape--circle" style="top:-30px; right:8%; width:90px; height:90px; background:var(--color-mustard);"></span>
+    <span class="shape shape--arch" style="bottom:10%; left:-30px; width:100px; height:140px; background:var(--color-royal); opacity:.18"></span>
+    <span class="shape shape--square" style="top:30%; right:-20px; width:50px; height:50px; background:var(--color-magenta); transform:rotate(20deg);"></span>
+  </>
+)}
+
+{variant === 'servicos' && (
+  <>
+    <span class="shape shape--circle" style="top:5%; left:-3%; width:110px; height:110px; background:var(--color-magenta); opacity:.18"></span>
+    <span class="shape shape--arch" style="bottom:5%; right:5%; width:80px; height:110px; background:var(--color-mustard); opacity:.6"></span>
+  </>
+)}

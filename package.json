@@ -1,0 +1,26 @@
+{
+  "name": "culturalia-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site institucional da Culturalia Produções",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "sanity:dev": "cd sanity && sanity dev",
+    "sanity:deploy": "cd sanity && sanity deploy"
+  },
+  "dependencies": {
+    "@astrojs/partytown": "^2.1.2",
+    "@astrojs/sitemap": "3.2.1",
+    "@sanity/client": "^6.21.3",
+    "@sanity/image-url": "^1.0.2",
+    "astro": "^4.16.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

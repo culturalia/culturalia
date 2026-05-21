@@ -1,0 +1,195 @@
+---
+import { SITE } from '@lib/config';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import WhatsAppButton from '@components/WhatsAppButton.astro';
+import Analytics from '@components/Analytics.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = '/og-default.png',
+  noindex = false,
+  bodyClass = '',
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${SITE.shortName}` : `${SITE.name} — ${SITE.slogan}`;
+const canonical = new URL(Astro.url.pathname, SITE.url).toString();
+const ogImage = new URL(image, SITE.url).toString();
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={SITE.name} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={pageTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Theme & favicons -->
+    <meta name="theme-color" content="#FCEAE5" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Fontes Google: Poppins (heading) + Red Hat Display (body) + Bowlby One SC (display) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Poppins:wght@400;500;600;700;800&family=Red+Hat+Display:wght@400;500;600;700&display=swap"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url,
+      logo: `${SITE.url}/logos/logo-color.png`,
+      description: SITE.description,
+      foundingDate: String(SITE.founded),
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: SITE.city,
+        addressRegion: SITE.state,
+        addressCountry: 'BR',
+      },
+      sameAs: ['https://instagram.com/culturalia.br'],
+    })} />
+
+    <Analytics />
+  </head>
+  <body class={bodyClass}>
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppButton />
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script is:inline>
+      // mailto fallback: alguns sistemas (Windows sem cliente de e-mail) ignoram
+      // mailto: links. Ao clicar, sempre copia o endereço pro clipboard e mostra
+      // um toast. O navegador também tenta abrir o cliente — quem tiver, abre.
+      (function () {
+        const toast = document.getElementById('toast');
+        let toastTimer;
+
+        function showToast(msg) {
+          if (!toast) return;
+          toast.textContent = msg;
+          toast.classList.add('toast--show');
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => toast.classList.remove('toast--show'), 2400);
+        }
+
+        async function copyToClipboard(text) {
+          try {
+            await navigator.clipboard.writeText(text);
+            return true;
+          } catch (_) {
+            // Fallback antigo: textarea + execCommand
+            try {
+              const ta = document.createElement('textarea');
+              ta.value = text;
+              ta.style.position = 'fixed';
+              ta.style.opacity = '0';
+              document.body.appendChild(ta);
+              ta.select();
+              const ok = document.execCommand('copy');
+              document.body.removeChild(ta);
+              return ok;
+            } catch (__) {
+              return false;
+            }
+          }
+        }
+
+        document.addEventListener('click', async function (e) {
+          const link = e.target && (e.target.closest ? e.target.closest('a[href^="mailto:"]') : null);
+          if (!link) return;
+          const email = link.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+          if (!email) return;
+          const copied = await copyToClipboard(email);
+          if (copied) {
+            showToast('E-mail copiado: ' + email);
+          }
+          // Não chamamos preventDefault: o browser ainda tenta o cliente de e-mail.
+          // Se não houver cliente, o usuário já tem o e-mail no clipboard.
+        });
+      })();
+    </script>
+
+    <style>
+      .skip-link {
+        position: absolute;
+        top: -100px;
+        left: 1rem;
+        background: var(--color-navy);
+        color: var(--color-cream);
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        z-index: 9999;
+        transition: top 0.2s var(--ease);
+      }
+      .skip-link:focus { top: 1rem; }
+
+      #toast {
+        position: fixed;
+        left: 50%;
+        bottom: 2rem;
+        transform: translate(-50%, 1rem);
+        background: var(--color-navy);
+        color: var(--color-cream);
+        padding: 0.85rem 1.25rem;
+        border-radius: var(--radius-pill);
+        font-family: var(--font-heading);
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        box-shadow: var(--shadow-md);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+        z-index: 10000;
+        max-width: calc(100vw - 2rem);
+        text-align: center;
+      }
+      #toast.toast--show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    </style>
+  </body>
+</html>

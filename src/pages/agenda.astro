@@ -1,0 +1,178 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Shapes from '@components/Shapes.astro';
+import { whatsappLink, SOCIAL } from '@lib/config';
+import { getUpcomingEvents, isSanityConfigured } from '@lib/sanity';
+
+// Busca eventos no Sanity. Se o Sanity não estiver configurado ou a busca
+// falhar (rede, projeto novo sem dados), cai num array vazio e a página
+// mostra o estado "nenhum evento agendado".
+let events: Awaited<ReturnType<typeof getUpcomingEvents>> = [];
+if (isSanityConfigured) {
+  try {
+    events = await getUpcomingEvents();
+  } catch (err) {
+    console.warn('[agenda] erro ao buscar eventos do Sanity:', err);
+  }
+}
+---
+
+<Layout
+  title="Agenda"
+  description="Próximas apresentações, estreias e eventos culturais da Culturalia."
+>
+  <section class="page-hero">
+    <Shapes variant="confetti" />
+    <div class="container">
+      <span class="selo selo--magenta">Cronograma</span>
+      <h1>Próximos <span class="text-magenta">espetáculos</span>.</h1>
+      <p class="lead">
+        Programação de apresentações, estreias e eventos especiais. Marca na agenda — corre!
+      </p>
+    </div>
+  </section>
+
+  <section class="section agenda-section">
+    <div class="container">
+      {events.length === 0 ? (
+        <div class="agenda-empty">
+          <div class="agenda-empty__shape" aria-hidden="true"></div>
+          <span class="selo selo--mustard">Em breve</span>
+          <h2>Nenhum evento agendado no momento.</h2>
+          <p>
+            Estamos preparando novidades. Acompanhe a Culturalia no Instagram para ser avisado
+            das próximas apresentações ou fale com a gente.
+          </p>
+          <div class="agenda-empty__actions">
+            <a class="btn btn--primary" href={SOCIAL.instagram.url} target="_blank" rel="noopener noreferrer">
+              Seguir no Instagram
+            </a>
+            <a class="btn btn--outline" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+              Conversar no WhatsApp
+            </a>
+          </div>
+        </div>
+      ) : (
+        <ol class="agenda-list">
+          {events.map((e) => {
+            const d = new Date(e.date);
+            const mes = d.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '').toUpperCase();
+            const dia = d.getDate().toString().padStart(2, '0');
+            return (
+              <li class="agenda-item">
+                <div class="agenda-item__date">
+                  <span class="agenda-item__mes">{mes}</span>
+                  <span class="agenda-item__dia">{dia}</span>
+                </div>
+                <div class="agenda-item__body">
+                  <h3>{e.title}</h3>
+                  <p>{e.venue} · {e.city}</p>
+                </div>
+                {e.ticketUrl && (
+                  <a class="btn btn--primary" href={e.ticketUrl} target="_blank" rel="noopener noreferrer">Ingresso</a>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding-block: clamp(4rem, 8vw, 6rem);
+    background: var(--color-magenta);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero h1 {
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: var(--fs-4xl);
+    margin: 1rem 0;
+    line-height: 1.05;
+  }
+  .page-hero .text-magenta { color: var(--color-mustard); }
+  .page-hero .lead { font-size: var(--fs-md); color: rgba(255,255,255,0.92); max-width: 60ch; }
+
+  .agenda-section { background: var(--color-cream); }
+
+  .agenda-empty {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--bg-alt);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .agenda-empty__shape {
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: var(--color-cyan);
+    opacity: 0.25;
+  }
+  .agenda-empty h2 { font-size: var(--fs-xl); margin: 1rem 0; }
+  .agenda-empty p { color: var(--text-soft); margin-bottom: 2rem; }
+  .agenda-empty__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .agenda-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .agenda-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    background: var(--bg-alt);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+  .agenda-item__date {
+    text-align: center;
+    background: var(--color-cream);
+    border: 2px solid var(--color-navy);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+  }
+  .agenda-item__mes {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-navy);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+  .agenda-item__dia {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-navy);
+    line-height: 1;
+  }
+  .agenda-item__body h3 { margin: 0 0 0.25rem; }
+  .agenda-item__body p { margin: 0; font-size: var(--fs-sm); color: var(--text-soft); }
+
+  @media (max-width: 600px) {
+    .agenda-item { grid-template-columns: 80px 1fr; }
+    .agenda-item .btn { grid-column: 1 / -1; justify-self: stretch; }
+  }
+</style>

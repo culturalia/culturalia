@@ -1,0 +1,219 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Shapes from '@components/Shapes.astro';
+import { SITE, FOUNDER } from '@lib/config';
+---
+
+<Layout
+  title="Sobre"
+  description="A história da Culturalia: uma produtora artística que democratiza arte e cultura no Brasil desde 2019."
+>
+  <section class="page-hero page-hero--sobre">
+    <Shapes variant="sobre" />
+    <div class="container">
+      <span class="selo selo--mustard">Sobre a marca</span>
+      <h1>Cultura que <span class="text-magenta">conecta</span>.</h1>
+      <p class="lead">
+        Uma produtora artística com a missão de democratizar arte e cultura no Brasil,
+        principalmente teatro e dança.
+      </p>
+    </div>
+  </section>
+
+  <section class="section manifesto-page">
+    <div class="container container-narrow">
+      <span class="eyebrow">Manifesto</span>
+      <h2>Mais do que produtora,<br/>uma <span class="text-magenta">comunidade</span>.</h2>
+      <p>
+        Culturalia nasceu do vibrante sonho de transformar a experiência artística em algo
+        <strong>prático, acessível e simples</strong>. Em nosso universo, a arte, a cultura e o
+        entretenimento convergem para criar momentos extraordinários que transcendem o comum.
+      </p>
+      <p>
+        A Culturalia é mais do que uma produtora de espetáculos; é uma comunidade de amantes da arte.
+        A cultura se conecta com você, a acessibilidade se encontra com a sofisticação, e cada
+        apresentação é uma celebração única e emocionante.
+      </p>
+    </div>
+  </section>
+
+  <section class="section conceito">
+    <div class="container container-narrow">
+      <span class="eyebrow">Conceito</span>
+      <h2>Força e leveza,<br/>na medida certa.</h2>
+      <p>
+        Nossa identidade representa uma produtora artística e de entretenimento que tem como intuito
+        democratizar a arte e a cultura no Brasil. Procuramos transmitir a força e ao mesmo tempo a
+        leveza da essência de uma marca <strong>inovadora, atual e democrática</strong>.
+      </p>
+
+      <div class="pilares">
+        <div class="pilar">
+          <span class="pilar__icon selo selo--royal">01</span>
+          <h3>Democratizar</h3>
+          <p>Levamos arte e cultura para mais pessoas, com foco em teatro e dança.</p>
+        </div>
+        <div class="pilar">
+          <span class="pilar__icon selo selo--magenta">02</span>
+          <h3>Valorizar</h3>
+          <p>Reconhecemos o artista e o público como o centro de cada produção.</p>
+        </div>
+        <div class="pilar">
+          <span class="pilar__icon selo selo--mustard">03</span>
+          <h3>Transformar</h3>
+          <p>Fazemos projetos culturais que mudam vidas — dentro e fora do palco.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section fundadora">
+    <div class="container">
+      <span class="eyebrow">Quem está por trás</span>
+      <div class="fundadora__card">
+        <div class="fundadora__photo" aria-hidden="true">
+          <span class="fundadora__initials">{FOUNDER.name.charAt(0)}</span>
+        </div>
+        <div class="fundadora__body">
+          <span class="selo selo--cyan">{FOUNDER.role}</span>
+          <h2>{FOUNDER.name}</h2>
+          <p>{FOUNDER.bio}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section linha-do-tempo">
+    <div class="container container-narrow">
+      <span class="eyebrow">Linha do tempo</span>
+      <h2>De 2019 até hoje.</h2>
+      <ol class="timeline">
+        <li>
+          <span class="timeline__year">{SITE.founded}</span>
+          <div>
+            <h3>Fundação</h3>
+            <p>Nasce a Culturalia, com o propósito de democratizar arte e cultura no Brasil.</p>
+          </div>
+        </li>
+        <li>
+          <span class="timeline__year">Hoje</span>
+          <div>
+            <h3>Comunidade ativa</h3>
+            <p>Produção de espetáculos, captação cultural, gestão e formação — atuando em cinco frentes.</p>
+          </div>
+        </li>
+        <li>
+          <span class="timeline__year">→</span>
+          <div>
+            <h3>Próximos capítulos</h3>
+            <p>Novas montagens, festivais e projetos que ampliam o acesso à arte.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .container-narrow { max-width: 820px; }
+
+  .page-hero {
+    padding-block: clamp(4rem, 8vw, 6rem);
+    background: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero h1 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-4xl);
+    margin: 1rem 0;
+  }
+  .page-hero .lead {
+    font-size: var(--fs-md);
+    color: var(--text-soft);
+    max-width: 60ch;
+  }
+
+  .manifesto-page { background: var(--bg-alt); }
+  .manifesto-page p, .conceito p { font-size: var(--fs-md); color: var(--text-soft); }
+
+  .pilares {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .pilar {
+    background: var(--color-cream);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+  }
+  .pilar__icon {
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+  .pilar h3 { margin: 0 0 0.5rem; font-size: var(--fs-lg); }
+  .pilar p { font-size: var(--fs-sm); color: var(--text-soft); margin: 0; }
+
+  .fundadora { background: var(--color-navy); color: var(--color-cream); }
+  .fundadora h2, .fundadora .eyebrow { color: var(--color-cream); }
+  .fundadora__card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .fundadora__photo {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--color-magenta), var(--color-orange));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .fundadora__initials {
+    font-family: var(--font-display);
+    font-size: 7rem;
+    color: var(--color-cream);
+    line-height: 1;
+  }
+  .fundadora__body h2 { font-size: var(--fs-3xl); margin: 1rem 0; }
+  .fundadora__body p { color: rgba(252, 234, 229, 0.88); font-size: var(--fs-md); }
+
+  @media (max-width: 720px) {
+    .fundadora__card { grid-template-columns: 1fr; gap: 1.5rem; }
+    .fundadora__photo { max-width: 200px; }
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--color-cream);
+    border-radius: var(--radius-md);
+    border-left: 6px solid var(--color-magenta);
+  }
+  .timeline li:nth-child(2) { border-left-color: var(--color-mustard); }
+  .timeline li:nth-child(3) { border-left-color: var(--color-royal); }
+  .timeline__year {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    color: var(--color-magenta);
+    line-height: 1;
+  }
+  .timeline li:nth-child(2) .timeline__year { color: var(--color-mustard); }
+  .timeline li:nth-child(3) .timeline__year { color: var(--color-royal); }
+  .timeline h3 { margin: 0 0 0.25rem; }
+  .timeline p { margin: 0; color: var(--text-soft); }
+</style>

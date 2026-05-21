@@ -1,0 +1,395 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Shapes from '@components/Shapes.astro';
+import { SITE, SERVICES, FEATURED_SHOWS, whatsappLink } from '@lib/config';
+import { getShows, isSanityConfigured, urlFor } from '@lib/sanity';
+
+// Home: tenta carregar espetáculos do Sanity; se vazio ou Sanity desligado,
+// usa FEATURED_SHOWS do config como fallback. Mostra no máximo 2 destaques.
+type ShowEntry = {
+  slug: string;
+  title: string;
+  tagline?: string;
+  description: string;
+  color: string;
+  imageUrl?: string;
+};
+
+let featuredShows: ShowEntry[] = FEATURED_SHOWS.map((s) => ({
+  slug: s.slug,
+  title: s.title,
+  tagline: s.tagline,
+  description: s.description,
+  color: s.color,
+}));
+
+if (isSanityConfigured) {
+  try {
+    const fromSanity = await getShows();
+    if (fromSanity.length > 0) {
+      featuredShows = fromSanity.slice(0, 2).map((s) => ({
+        slug: s.slug?.current ?? s._id,
+        title: s.title,
+        tagline: s.tagline,
+        description: s.description,
+        color: s.color ?? 'magenta',
+        imageUrl: s.images?.[0] ? urlFor(s.images[0])?.width(960).height(600).fit('crop').url() ?? undefined : undefined,
+      }));
+    }
+  } catch (err) {
+    console.warn('[home] erro ao buscar shows do Sanity:', err);
+  }
+}
+---
+
+<Layout>
+  {/* ============ HERO ============ */}
+  <section class="hero">
+    <Shapes variant="hero" />
+    <div class="container hero__inner">
+      <span class="selo selo--magenta hero__chip">Arte &amp; Cultura</span>
+      <h1 class="hero__title">
+        Viva esse <span class="hero__title-accent">espetáculo!</span>
+      </h1>
+      <p class="hero__lead">
+        A Culturalia transforma a experiência artística em algo
+        <strong>prático, acessível e simples</strong>.
+        Produzimos teatro, dança e projetos culturais que conectam pessoas à arte.
+      </p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary" href="/agenda">Ver próximos espetáculos</a>
+        <a class="btn btn--outline" href={whatsappLink('Olá! Vim pelo site da Culturalia e gostaria de conversar.')} target="_blank" rel="noopener noreferrer">Conversar no WhatsApp</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><strong>{new Date().getFullYear() - SITE.founded}+</strong><span>anos transformando vidas pela arte</span></div>
+        <div class="stat"><strong>5</strong><span>frentes de atuação cultural</span></div>
+        <div class="stat"><strong>100%</strong><span>dedicados a artistas e público</span></div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ MANIFESTO ============ */}
+  <section class="section manifesto">
+    <Shapes variant="confetti" />
+    <div class="container">
+      <span class="eyebrow">Sobre a marca</span>
+      <h2 class="manifesto__title">
+        Mais do que uma produtora —<br/>
+        <span class="text-magenta">uma comunidade de amantes da arte.</span>
+      </h2>
+      <div class="manifesto__grid">
+        <p>
+          A Culturalia nasceu do vibrante sonho de transformar a experiência artística em algo
+          prático, acessível e simples. Em nosso universo, a arte, a cultura e o entretenimento
+          convergem para criar momentos extraordinários que transcendem o comum.
+        </p>
+        <p>
+          A cultura se conecta com você, a acessibilidade se encontra com a sofisticação,
+          e cada apresentação é uma celebração única e emocionante.
+        </p>
+      </div>
+      <a class="btn btn--secondary manifesto__cta" href="/sobre">Conheça nossa história</a>
+    </div>
+  </section>
+
+  {/* ============ SERVIÇOS ============ */}
+  <section class="section servicos-preview">
+    <Shapes variant="servicos" />
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">O que fazemos</span>
+        <h2>Cinco formas de levar arte<br/>até o público.</h2>
+      </div>
+
+      <div class="servicos-grid">
+        {SERVICES.map((s) => (
+          <a class={`servico-card servico-card--${s.color}`} href={`/servicos#${s.slug}`}>
+            <div class="servico-card__shape" aria-hidden="true"></div>
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <span class="servico-card__more" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="section-foot">
+        <a class="btn btn--outline" href="/servicos">Conhecer todos os serviços</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ ESPETÁCULOS ============ */}
+  <section class="section espetaculos-preview">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Nossos espetáculos</span>
+        <h2>Produções que <span class="text-magenta">marcaram</span>.</h2>
+      </div>
+
+      <div class="espetaculos-grid">
+        {featuredShows.map((show) => (
+          <article class={`show-card show-card--${show.color}`}>
+            <div class="show-card__media" aria-hidden={show.imageUrl ? undefined : 'true'}>
+              {show.imageUrl ? (
+                <img src={show.imageUrl} alt={show.title} loading="lazy" class="show-card__image" />
+              ) : (
+                <span class="show-card__placeholder">{show.title.split(' ')[0]}</span>
+              )}
+            </div>
+            <div class="show-card__body">
+              {show.tagline && <span class="selo selo--mustard">{show.tagline}</span>}
+              <h3>{show.title}</h3>
+              <p>{show.description}</p>
+              <a class="show-card__link" href={`/portfolio#${show.slug}`}>Saiba mais →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="section-foot">
+        <a class="btn btn--outline" href="/portfolio">Ver portfólio completo</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ CTA FINAL ============ */}
+  <section class="cta-final">
+    <div class="container">
+      <div class="cta-final__inner">
+        <h2>Tem um projeto cultural em mente?</h2>
+        <p>Conta pra gente. Da concepção à estreia, transformamos sua ideia em espetáculo.</p>
+        <div class="cta-final__buttons">
+          <a class="btn btn--primary" href={whatsappLink('Olá, Culturalia! Quero conversar sobre um projeto.')} target="_blank" rel="noopener noreferrer">
+            Falar no WhatsApp
+          </a>
+          <a class="btn btn--outline cta-final__btn-light" href="/contato">Outras formas de contato</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(4rem, 10vw, 8rem);
+    background: linear-gradient(180deg, var(--color-cream) 0%, #FFE3D9 100%);
+  }
+  .hero__inner { position: relative; z-index: 2; text-align: center; max-width: 920px; }
+  .hero__chip { margin-bottom: 1.5rem; }
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-hero);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    color: var(--color-navy);
+  }
+  .hero__title-accent {
+    background: linear-gradient(120deg, var(--color-magenta), var(--color-orange) 60%, var(--color-mustard));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    transform: rotate(-1deg);
+  }
+  .hero__lead {
+    font-size: var(--fs-md);
+    max-width: 620px;
+    margin: 0 auto 2rem;
+    color: var(--text-soft);
+  }
+  .hero__lead strong { color: var(--color-navy); font-weight: 700; }
+  .hero__ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+  }
+  .hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .stat {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(6px);
+  }
+  .stat strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: var(--fs-2xl);
+    color: var(--color-magenta);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .stat span { font-size: 0.8rem; color: var(--text-soft); line-height: 1.3; }
+
+  /* ============ MANIFESTO ============ */
+  .manifesto { background: var(--color-cream); }
+  .manifesto__title {
+    font-size: var(--fs-3xl);
+    max-width: 22ch;
+    line-height: 1.15;
+  }
+  .manifesto__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin: 2.5rem 0;
+    font-size: var(--fs-md);
+    color: var(--text-soft);
+  }
+  .manifesto__grid p { margin: 0; }
+  @media (max-width: 720px) { .manifesto__grid { grid-template-columns: 1fr; gap: 1.25rem; } }
+
+  /* ============ SERVIÇOS ============ */
+  .servicos-preview { background: #FFF; }
+  .section-head { max-width: 720px; margin-bottom: 3rem; }
+  .section-foot { margin-top: 3rem; text-align: center; }
+
+  .servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .servico-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 2rem 1.5rem 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-cream);
+    color: var(--color-navy);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+    min-height: 240px;
+  }
+  .servico-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); color: var(--color-navy); }
+
+  .servico-card h3 { margin: 0; font-size: var(--fs-lg); }
+  .servico-card p { margin: 0; font-size: var(--fs-sm); color: var(--text-soft); }
+  .servico-card__shape {
+    position: absolute;
+    top: -25px; right: -25px;
+    width: 90px; height: 90px;
+    border-radius: 50%;
+  }
+  .servico-card__more {
+    margin-top: auto;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: transform var(--t-fast) var(--ease);
+  }
+  .servico-card:hover .servico-card__more { transform: translateX(6px); }
+
+  .servico-card--royal .servico-card__shape { background: var(--color-royal); }
+  .servico-card--magenta .servico-card__shape { background: var(--color-magenta); }
+  .servico-card--mustard .servico-card__shape { background: var(--color-mustard); }
+  .servico-card--orange .servico-card__shape { background: var(--color-orange); }
+  .servico-card--cyan .servico-card__shape { background: var(--color-cyan); }
+
+  /* ============ ESPETÁCULOS ============ */
+  .espetaculos-preview { background: var(--color-cream); }
+  .espetaculos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 800px) { .espetaculos-grid { grid-template-columns: 1fr; } }
+
+  .show-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-alt);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+  }
+  .show-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .show-card__media {
+    aspect-ratio: 16/10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .show-card__placeholder {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: rgba(255,255,255,0.95);
+    text-align: center;
+    padding: 1rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .show-card--magenta .show-card__media { background: linear-gradient(135deg, var(--color-magenta), var(--color-orange)); }
+  .show-card--royal .show-card__media { background: linear-gradient(135deg, var(--color-royal), var(--color-navy)); }
+  .show-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .show-card__body { padding: 1.75rem; }
+  .show-card__body h3 { margin: 1rem 0 0.5rem; font-size: var(--fs-xl); }
+  .show-card__body p { font-size: var(--fs-sm); color: var(--text-soft); margin-bottom: 1rem; }
+  .show-card__link { font-weight: 600; color: var(--color-magenta); }
+
+  /* ============ CTA FINAL ============ */
+  .cta-final {
+    padding-block: var(--space-9);
+    background: var(--color-navy);
+    color: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-final::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: var(--color-magenta);
+    opacity: 0.18;
+  }
+  .cta-final::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: var(--color-mustard);
+    opacity: 0.16;
+  }
+  .cta-final__inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .cta-final h2 { color: var(--color-cream); font-size: var(--fs-3xl); }
+  .cta-final p { color: rgba(252, 234, 229, 0.86); font-size: var(--fs-md); margin-bottom: 2rem; }
+  .cta-final__buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .cta-final__btn-light {
+    box-shadow: inset 0 0 0 2px var(--color-cream);
+    color: var(--color-cream);
+  }
+  .cta-final__btn-light:hover {
+    background: var(--color-cream);
+    color: var(--color-navy);
+  }
+</style>

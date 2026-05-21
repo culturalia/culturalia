@@ -1,0 +1,270 @@
+/* ============================================
+   CULTURALIA — DESIGN TOKENS
+   Paleta extraída da identidade visual oficial.
+   ============================================ */
+
+:root {
+  /* ---------- Paleta ---------- */
+  --color-cream: #FCEAE5;          /* fundo principal */
+  --color-cream-dark: #F5DDD2;     /* hover / divisores */
+  --color-navy: #022765;           /* azul marinho — texto principal */
+  --color-navy-deep: #001B4D;
+  --color-royal: #0033E7;          /* azul royal — destaque */
+  --color-cyan: #00BAE5;           /* ciano */
+  --color-magenta: #CE0D68;        /* magenta / pink */
+  --color-pink: #F19CB5;           /* rosa claro */
+  --color-red: #CE141A;            /* vermelho */
+  --color-mustard: #CFAE0D;        /* mostarda */
+  --color-orange: #CF6F13;         /* laranja */
+
+  /* ---------- Semânticos ---------- */
+  --bg: var(--color-cream);
+  --bg-alt: #FFF;
+  --bg-dark: var(--color-navy);
+  --text: var(--color-navy);
+  --text-soft: #2A3E70;
+  --text-on-dark: var(--color-cream);
+  --accent: var(--color-magenta);
+  --accent-2: var(--color-royal);
+  --accent-3: var(--color-mustard);
+  --border: rgba(2, 39, 101, 0.12);
+
+  /* ---------- Tipografia ---------- */
+  --font-display: 'Bowlby One SC', 'SK Concretica', 'Poppins', system-ui, sans-serif;
+  --font-heading: 'Poppins', system-ui, sans-serif;
+  --font-body: 'Red Hat Display', 'Red Hat Text', system-ui, sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2.25rem;
+  --fs-3xl: 3rem;
+  --fs-4xl: clamp(2.5rem, 6vw, 4.75rem);
+  --fs-hero: clamp(3rem, 8vw, 6.5rem);
+
+  /* ---------- Espaçamento ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* ---------- Layout ---------- */
+  --container-max: 1200px;
+  --container-pad: clamp(1rem, 4vw, 2.5rem);
+
+  /* ---------- Radius & sombras ---------- */
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 2px 8px rgba(2, 39, 101, 0.08);
+  --shadow-md: 0 8px 24px rgba(2, 39, 101, 0.12);
+  --shadow-lg: 0 16px 48px rgba(2, 39, 101, 0.18);
+
+  /* ---------- Transições ---------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 160ms;
+  --t-base: 280ms;
+  --t-slow: 480ms;
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 var(--space-4);
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: var(--fs-4xl); }
+h2 { font-size: var(--fs-3xl); }
+h3 { font-size: var(--fs-2xl); }
+h4 { font-size: var(--fs-xl); }
+
+p { margin: 0 0 var(--space-4); }
+
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color var(--t-fast) var(--ease);
+}
+a:hover { color: var(--accent); }
+
+img, svg, video { max-width: 100%; height: auto; display: block; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+/* ============================================
+   UTILITÁRIOS
+   ============================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.container-wide { max-width: 1400px; }
+
+.section {
+  padding-block: var(--space-9);
+  position: relative;
+}
+
+.section--tight { padding-block: var(--space-7); }
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-4);
+}
+
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  line-height: 1;
+  text-decoration: none;
+  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn:active { transform: translateY(0); }
+
+.btn--primary { background: var(--color-magenta); color: #fff; }
+.btn--primary:hover { background: #B30B5A; color: #fff; }
+
+.btn--secondary { background: var(--color-navy); color: var(--color-cream); }
+.btn--secondary:hover { background: var(--color-navy-deep); color: var(--color-cream); }
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-navy);
+  box-shadow: inset 0 0 0 2px var(--color-navy);
+}
+.btn--outline:hover { background: var(--color-navy); color: var(--color-cream); }
+
+.btn--whatsapp { background: #25D366; color: #fff; }
+.btn--whatsapp:hover { background: #1FB058; color: #fff; }
+
+/* Selos / chips conceituais */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.04em;
+}
+.selo--royal { background: var(--color-royal); color: #fff; }
+.selo--cyan { background: var(--color-cyan); color: var(--color-navy); }
+.selo--mustard { background: var(--color-mustard); color: var(--color-navy); }
+.selo--orange { background: var(--color-orange); color: #fff; }
+.selo--magenta { background: var(--color-magenta); color: #fff; }
+.selo--pink { background: var(--color-pink); color: var(--color-navy); }
+.selo--navy { background: var(--color-navy); color: var(--color-cream); }
+
+/* Accent text */
+.text-magenta { color: var(--color-magenta); }
+.text-royal { color: var(--color-royal); }
+.text-mustard { color: var(--color-mustard); }
+.text-orange { color: var(--color-orange); }
+.text-cyan { color: var(--color-cyan); }
+
+/* Visually hidden */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   ELEMENTOS DECORATIVOS — FORMAS CHAPADAS
+   ============================================ */
+
+.shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shape--circle { border-radius: 50%; }
+.shape--square { border-radius: var(--radius-sm); }
+.shape--arch { border-radius: 50% 50% 0 0; }
+
+.star {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Conteúdo sempre acima das formas */
+.section > .container,
+.section > * { position: relative; z-index: 1; }

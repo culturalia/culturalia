@@ -1,0 +1,101 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { SITE, CONTACT } from '@lib/config';
+const updated = '20/05/2026';
+---
+
+<Layout title="Política de Privacidade" description="Política de privacidade e tratamento de dados pessoais da Culturalia.">
+  <article class="legal">
+    <div class="container container-narrow">
+      <span class="selo selo--navy">Legal</span>
+      <h1>Política de Privacidade</h1>
+      <p class="legal__meta">Última atualização: {updated}</p>
+
+      <p>
+        Esta Política de Privacidade descreve como a <strong>{SITE.name}</strong> ("Culturalia",
+        "nós") coleta, usa e protege os dados pessoais dos visitantes do site
+        <a href={SITE.url}>{SITE.url}</a>, em conformidade com a Lei Geral de Proteção de Dados
+        Pessoais (Lei nº 13.709/2018 — LGPD).
+      </p>
+
+      <h2>1. Dados que coletamos</h2>
+      <p>Coletamos os seguintes tipos de dados:</p>
+      <ul>
+        <li><strong>Dados de navegação:</strong> coletados automaticamente via Google Analytics 4 (páginas visitadas, tempo de permanência, navegador, dispositivo, localização aproximada). Esses dados são agregados e anonimizados.</li>
+        <li><strong>Dados de contato:</strong> quando você nos contata via WhatsApp, e-mail ou Instagram, recebemos as informações que você nos envia voluntariamente (nome, contato, conteúdo da mensagem).</li>
+      </ul>
+
+      <h2>2. Como usamos seus dados</h2>
+      <ul>
+        <li>Para responder mensagens, propostas e dúvidas;</li>
+        <li>Para entender o desempenho do site e melhorar a experiência;</li>
+        <li>Para enviar informações sobre projetos da Culturalia, somente se você solicitar.</li>
+      </ul>
+
+      <h2>3. Base legal</h2>
+      <p>
+        Tratamos seus dados com base no consentimento (ao iniciar uma conversa pelos canais oficiais)
+        e no legítimo interesse (para análise estatística agregada do site).
+      </p>
+
+      <h2>4. Cookies</h2>
+      <p>
+        Utilizamos cookies essenciais para funcionamento do site e cookies analíticos do
+        Google Analytics. Você pode desabilitar cookies nas configurações do seu navegador.
+      </p>
+
+      <h2>5. Compartilhamento</h2>
+      <p>
+        Não vendemos seus dados. Compartilhamos informações apenas com prestadores de serviço
+        necessários para a operação do site (ex.: Google Analytics, Vercel para hospedagem),
+        que aderem a padrões de proteção de dados.
+      </p>
+
+      <h2>6. Seus direitos</h2>
+      <p>Conforme a LGPD, você tem direito a:</p>
+      <ul>
+        <li>Confirmação da existência de tratamento;</li>
+        <li>Acesso aos seus dados;</li>
+        <li>Correção de dados incompletos ou desatualizados;</li>
+        <li>Anonimização, bloqueio ou eliminação de dados desnecessários;</li>
+        <li>Portabilidade;</li>
+        <li>Revogação do consentimento.</li>
+      </ul>
+
+      <h2>7. Retenção</h2>
+      <p>
+        Mantemos seus dados pelo tempo necessário para cumprir as finalidades descritas
+        ou por exigência legal.
+      </p>
+
+      <h2>8. Contato</h2>
+      <p>
+        Para exercer seus direitos ou tirar dúvidas sobre esta política, entre em contato
+        pelo e-mail <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+      </p>
+
+      <p class="legal__note">
+        <em>Este texto é um modelo padrão LGPD-compatível. Recomendamos revisão por um
+        advogado especializado antes de uso definitivo.</em>
+      </p>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .legal { padding-block: var(--space-9); background: var(--bg-alt); }
+  .container-narrow { max-width: 760px; }
+  .legal h1 { font-size: var(--fs-3xl); margin: 1rem 0 0.25rem; }
+  .legal h2 { font-size: var(--fs-lg); margin: 2.5rem 0 1rem; color: var(--color-magenta); }
+  .legal__meta { font-size: var(--fs-sm); color: var(--text-soft); margin-bottom: 2rem; }
+  .legal p, .legal ul { color: var(--text-soft); line-height: 1.7; }
+  .legal ul { padding-left: 1.5rem; }
+  .legal li { margin-bottom: 0.5rem; }
+  .legal__note {
+    margin-top: 3rem;
+    padding: 1rem 1.25rem;
+    background: var(--color-cream);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-sm);
+  }
+</style>

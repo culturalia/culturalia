@@ -1,0 +1,224 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Shapes from '@components/Shapes.astro';
+import { FEATURED_SHOWS, whatsappLink } from '@lib/config';
+import { getShows, isSanityConfigured, urlFor } from '@lib/sanity';
+
+// Lista de espetáculos: Sanity quando tiver dados, senão FEATURED_SHOWS (config).
+// Normalizamos para um shape comum independente da origem.
+type ShowEntry = {
+  slug: string;
+  title: string;
+  tagline?: string;
+  year?: string;
+  venue?: string;
+  duration?: string;
+  description: string;
+  color: string;
+  imageUrl?: string;
+};
+
+let shows: ShowEntry[] = FEATURED_SHOWS.map((s) => ({
+  slug: s.slug,
+  title: s.title,
+  tagline: s.tagline,
+  year: s.year || undefined,
+  venue: s.venue || undefined,
+  duration: s.duration || undefined,
+  description: s.description,
+  color: s.color,
+}));
+
+if (isSanityConfigured) {
+  try {
+    const fromSanity = await getShows();
+    if (fromSanity.length > 0) {
+      shows = fromSanity.map((s) => ({
+        slug: s.slug?.current ?? s._id,
+        title: s.title,
+        tagline: s.tagline,
+        year: s.year,
+        venue: s.venue,
+        duration: s.duration,
+        description: s.description,
+        color: s.color ?? 'magenta',
+        imageUrl: s.images?.[0] ? urlFor(s.images[0])?.width(800).height(1000).fit('crop').url() ?? undefined : undefined,
+      }));
+    }
+  } catch (err) {
+    console.warn('[portfolio] erro ao buscar shows do Sanity:', err);
+  }
+}
+---
+
+<Layout
+  title="Espetáculos"
+  description="Conheça os espetáculos produzidos pela Culturalia: Jazz It Up, Liberdade Liberdade e outras produções."
+>
+  <section class="page-hero">
+    <Shapes variant="hero" />
+    <div class="container">
+      <span class="selo selo--magenta">Espetáculos</span>
+      <h1>Histórias que <span class="text-magenta">tomam o palco</span>.</h1>
+      <p class="lead">
+        Cada produção é uma celebração única. Conheça os espetáculos que já levamos ao público
+        — do musical contemporâneo ao clássico repensado.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="shows-list">
+        {shows.map((show, i) => (
+          <article id={show.slug} class={`show-block ${i % 2 ? 'is-reverse' : ''}`}>
+            <div class={`show-block__media show-block__media--${show.color}`}>
+              {show.imageUrl ? (
+                <img src={show.imageUrl} alt={show.title} loading="lazy" class="show-block__image" />
+              ) : (
+                <span class="show-block__title-overlay">{show.title.split(' ')[0]}</span>
+              )}
+            </div>
+            <div class="show-block__body">
+              {show.tagline && <span class={`selo selo--${show.color === 'royal' ? 'mustard' : 'cyan'}`}>{show.tagline}</span>}
+              <h2>{show.title}</h2>
+              {(show.year || show.venue || show.duration) && (
+                <p class="show-block__meta">
+                  {[show.year, show.venue, show.duration].filter(Boolean).join(' · ')}
+                </p>
+              )}
+              <p class="show-block__desc">{show.description}</p>
+              <div class="show-block__actions">
+                <a class="btn btn--outline" href={whatsappLink(`Olá! Quero saber mais sobre ${show.title}.`)} target="_blank" rel="noopener noreferrer">
+                  Quero saber mais
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <aside class="cms-note">
+        <span class="selo selo--mustard">Em breve</span>
+        <p>Mais produções serão adicionadas em breve. Acompanhe a Culturalia no Instagram para novidades.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Quer produzir um espetáculo com a gente?</h2>
+      <p>Da concepção à temporada — fala com a gente e conta sua ideia.</p>
+      <a class="btn btn--primary" href={whatsappLink('Olá! Quero conversar sobre um espetáculo.')} target="_blank" rel="noopener noreferrer">
+        Conversar no WhatsApp
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding-block: clamp(4rem, 8vw, 6rem);
+    background: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero h1 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-4xl);
+    margin: 1rem 0;
+    line-height: 1.05;
+  }
+  .page-hero .lead { font-size: var(--fs-md); color: var(--text-soft); max-width: 60ch; }
+
+  .shows-list { display: flex; flex-direction: column; gap: 4rem; }
+
+  .show-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .show-block.is-reverse .show-block__media { order: 2; }
+
+  .show-block__media {
+    aspect-ratio: 4/5;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+  }
+  .show-block__media--magenta {
+    background: linear-gradient(135deg, var(--color-magenta), var(--color-orange) 70%, var(--color-mustard));
+  }
+  .show-block__media--royal {
+    background: linear-gradient(135deg, var(--color-royal), var(--color-navy) 60%, var(--color-magenta));
+  }
+  .show-block__media::before {
+    content: '';
+    position: absolute;
+    top: 20%; left: 20%;
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+  }
+  .show-block__media::after {
+    content: '';
+    position: absolute;
+    bottom: 15%; right: 18%;
+    width: 60px; height: 60px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 12px;
+    transform: rotate(15deg);
+  }
+
+  .show-block__title-overlay {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    z-index: 1;
+    position: relative;
+  }
+  .show-block__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .show-block__body h2 { font-size: var(--fs-3xl); margin: 1rem 0 0.5rem; }
+  .show-block__meta { font-size: var(--fs-sm); color: var(--text-soft); font-weight: 600; }
+  .show-block__desc { font-size: var(--fs-md); color: var(--text-soft); }
+  .show-block__actions { margin-top: 1rem; }
+
+  @media (max-width: 800px) {
+    .show-block, .show-block.is-reverse { grid-template-columns: 1fr; }
+    .show-block.is-reverse .show-block__media { order: 0; }
+  }
+
+  .cms-note {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: var(--color-cream);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 2px dashed var(--color-mustard);
+  }
+  .cms-note p { margin: 1rem 0 0; color: var(--text-soft); }
+
+  .cta-band {
+    background: var(--color-navy);
+    color: var(--color-cream);
+    padding-block: var(--space-8);
+    text-align: center;
+  }
+  .cta-band h2 { color: var(--color-cream); font-size: var(--fs-2xl); }
+  .cta-band p { color: rgba(252, 234, 229, 0.85); margin: 0 auto 1.5rem; max-width: 50ch; }
+</style>

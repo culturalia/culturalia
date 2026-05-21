@@ -1,0 +1,145 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Shapes from '@components/Shapes.astro';
+import { SERVICES, whatsappLink } from '@lib/config';
+---
+
+<Layout
+  title="Serviços"
+  description="Produção executiva, captação de recursos via Lei Rouanet, gestão cultural, workshops e consultoria artística. Conheça os serviços da Culturalia."
+>
+  <section class="page-hero">
+    <Shapes variant="servicos" />
+    <div class="container">
+      <span class="selo selo--cyan">O que fazemos</span>
+      <h1>Cinco frentes,<br/>uma <span class="text-magenta">missão</span>.</h1>
+      <p class="lead">
+        Cuidamos da arte do início ao fim — da ideia ao palco, da captação à plateia.
+        Cada serviço é pensado para valorizar o artista e o público.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {SERVICES.map((s, i) => (
+        <article id={s.slug} class={`servico-detail servico-detail--${s.color} ${i % 2 ? 'is-reverse' : ''}`}>
+          <div class="servico-detail__visual" aria-hidden="true">
+            <div class={`servico-detail__shape servico-detail__shape--${s.color}`}></div>
+            <span class="servico-detail__number">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="servico-detail__body">
+            <span class={`selo selo--${s.color}`}>0{i + 1}</span>
+            <h2>{s.title}</h2>
+            <p class="servico-detail__short">{s.short}</p>
+            <p>{s.description}</p>
+            <a class="btn btn--outline" href={whatsappLink(`Olá! Tenho interesse no serviço de ${s.title}.`)} target="_blank" rel="noopener noreferrer">
+              Conversar sobre {s.title.toLowerCase()}
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Não sabe por onde começar?</h2>
+      <p>A gente te ajuda a encontrar o caminho. Conversa de 15 minutos no WhatsApp, sem compromisso.</p>
+      <a class="btn btn--primary" href={whatsappLink()} target="_blank" rel="noopener noreferrer">Chamar no WhatsApp</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding-block: clamp(4rem, 8vw, 6rem);
+    background: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero h1 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-4xl);
+    margin: 1rem 0;
+    line-height: 1.05;
+  }
+  .page-hero .lead {
+    font-size: var(--fs-md);
+    color: var(--text-soft);
+    max-width: 60ch;
+  }
+
+  .servico-detail {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 3rem;
+    align-items: center;
+    padding-block: var(--space-8);
+    border-bottom: 1px solid var(--border);
+  }
+  .servico-detail:last-child { border-bottom: 0; }
+  .servico-detail.is-reverse { grid-template-columns: 1.4fr 1fr; }
+  .servico-detail.is-reverse .servico-detail__visual { order: 2; }
+
+  .servico-detail__visual {
+    position: relative;
+    aspect-ratio: 4/3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .servico-detail__shape {
+    position: absolute;
+    border-radius: 50%;
+    width: 70%;
+    height: 70%;
+    opacity: 0.95;
+  }
+  .servico-detail__shape--royal { background: var(--color-royal); }
+  .servico-detail__shape--magenta { background: var(--color-magenta); border-radius: 50% 50% 0 0; }
+  .servico-detail__shape--mustard { background: var(--color-mustard); border-radius: 12px; transform: rotate(15deg); }
+  .servico-detail__shape--orange { background: var(--color-orange); border-radius: 50%; }
+  .servico-detail__shape--cyan { background: var(--color-cyan); border-radius: 12px; }
+
+  .servico-detail__number {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 7rem);
+    color: rgba(252, 234, 229, 0.85);
+    line-height: 1;
+  }
+
+  .servico-detail__body h2 {
+    font-size: var(--fs-3xl);
+    margin: 1rem 0 0.5rem;
+  }
+  .servico-detail__short {
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-navy);
+    margin-bottom: 1rem;
+  }
+  .servico-detail__body p { color: var(--text-soft); font-size: var(--fs-base); }
+  .servico-detail__body .btn { margin-top: 1rem; }
+
+  @media (max-width: 800px) {
+    .servico-detail, .servico-detail.is-reverse { grid-template-columns: 1fr; }
+    .servico-detail.is-reverse .servico-detail__visual { order: 0; }
+  }
+
+  .cta-band {
+    background: var(--color-magenta);
+    color: #fff;
+    padding-block: var(--space-8);
+    text-align: center;
+  }
+  .cta-band h2 { color: #fff; font-size: var(--fs-2xl); }
+  .cta-band p { color: rgba(255, 255, 255, 0.92); max-width: 50ch; margin: 0 auto 1.5rem; }
+  .cta-band .btn--primary { background: #fff; color: var(--color-magenta); }
+  .cta-band .btn--primary:hover { background: var(--color-cream); color: var(--color-magenta); }
+</style>

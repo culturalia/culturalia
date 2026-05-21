@@ -1,0 +1,36 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Shapes from '@components/Shapes.astro';
+---
+
+<Layout title="Página não encontrada" noindex={true}>
+  <section class="notfound">
+    <Shapes variant="hero" />
+    <div class="container">
+      <span class="selo selo--mustard">404</span>
+      <h1>O espetáculo <span class="text-magenta">não está aqui</span>.</h1>
+      <p>Esta página saiu de cartaz ou nunca subiu ao palco. Mas a gente te leva pra outro lugar.</p>
+      <div class="notfound__actions">
+        <a class="btn btn--primary" href="/">Voltar para a home</a>
+        <a class="btn btn--outline" href="/agenda">Ver agenda</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .notfound {
+    padding-block: var(--space-10);
+    background: var(--color-cream);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .notfound h1 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-4xl);
+    margin: 1rem 0;
+  }
+  .notfound p { font-size: var(--fs-md); color: var(--text-soft); max-width: 50ch; margin: 0 auto 2rem; }
+  .notfound__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+</style>

@@ -1,0 +1,92 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { SITE, CONTACT } from '@lib/config';
+const updated = '20/05/2026';
+---
+
+<Layout title="Termos de Uso" description="Termos e condições de uso do site da Culturalia.">
+  <article class="legal">
+    <div class="container container-narrow">
+      <span class="selo selo--navy">Legal</span>
+      <h1>Termos de Uso</h1>
+      <p class="legal__meta">Última atualização: {updated}</p>
+
+      <p>
+        Ao acessar e utilizar o site <a href={SITE.url}>{SITE.url}</a>, você concorda com os
+        termos e condições descritos abaixo.
+      </p>
+
+      <h2>1. Objeto</h2>
+      <p>
+        O site da <strong>{SITE.name}</strong> tem caráter institucional e divulga informações
+        sobre a produtora, espetáculos, serviços e agenda de eventos.
+      </p>
+
+      <h2>2. Propriedade intelectual</h2>
+      <p>
+        Todo o conteúdo do site — textos, imagens, logos, identidade visual, ilustrações,
+        layouts — é de propriedade da {SITE.shortName} ou de seus licenciantes, protegido pelas leis
+        de direitos autorais. É proibida a reprodução total ou parcial sem autorização prévia.
+      </p>
+
+      <h2>3. Uso permitido</h2>
+      <ul>
+        <li>Você pode acessar o site para fins informativos e pessoais;</li>
+        <li>Compartilhamento de links é permitido e incentivado;</li>
+        <li>Não é permitido copiar, modificar ou redistribuir conteúdo para uso comercial sem autorização.</li>
+      </ul>
+
+      <h2>4. Links externos</h2>
+      <p>
+        O site pode conter links para sites de terceiros (ex.: bilheterias, plataformas de mídia).
+        A Culturalia não se responsabiliza pelo conteúdo, políticas ou práticas desses sites.
+      </p>
+
+      <h2>5. Limitação de responsabilidade</h2>
+      <p>
+        Embora façamos todo esforço para manter as informações precisas e atualizadas,
+        a Culturalia não garante a ausência de erros, e não se responsabiliza por eventuais
+        prejuízos decorrentes do uso das informações do site.
+      </p>
+
+      <h2>6. Modificações</h2>
+      <p>
+        Estes termos podem ser atualizados periodicamente. A versão mais recente sempre estará
+        publicada nesta página, com a data da última atualização.
+      </p>
+
+      <h2>7. Lei aplicável</h2>
+      <p>
+        Estes termos são regidos pela legislação brasileira. Eventuais disputas serão dirimidas
+        no foro da comarca de {SITE.city}/{SITE.state}.
+      </p>
+
+      <h2>8. Contato</h2>
+      <p>
+        Dúvidas sobre estes termos: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+      </p>
+
+      <p class="legal__note">
+        <em>Este texto é um modelo padrão. Recomendamos revisão por um advogado antes do uso definitivo.</em>
+      </p>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .legal { padding-block: var(--space-9); background: var(--bg-alt); }
+  .container-narrow { max-width: 760px; }
+  .legal h1 { font-size: var(--fs-3xl); margin: 1rem 0 0.25rem; }
+  .legal h2 { font-size: var(--fs-lg); margin: 2.5rem 0 1rem; color: var(--color-magenta); }
+  .legal__meta { font-size: var(--fs-sm); color: var(--text-soft); margin-bottom: 2rem; }
+  .legal p, .legal ul { color: var(--text-soft); line-height: 1.7; }
+  .legal ul { padding-left: 1.5rem; }
+  .legal li { margin-bottom: 0.5rem; }
+  .legal__note {
+    margin-top: 3rem;
+    padding: 1rem 1.25rem;
+    background: var(--color-cream);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-sm);
+  }
+</style>
