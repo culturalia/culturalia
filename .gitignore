@@ -33,3 +33,7 @@ sanity/.sanity/
 
 # vercel
 .vercel/
+
+# claude code (estado local, não compartilhar)
+.claude/.setup-state.json
+.claude/settings.local.json

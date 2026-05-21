@@ -1,7 +1,6 @@
 # Culturalia — Site Institucional
 
-> **Procurando o guia da Hilary?** Veja [`../README.md`](../README.md) na raiz da pasta.
-> Esse documento é em linguagem leiga, focado em deploy/Sanity/CI passo-a-passo.
+> 👋 **É a Hilary?** Abre o arquivo [`HILARY.md`](./HILARY.md) — tem o passo-a-passo simples pra você começar (instalar 3 programas, clonar o site, rodar `/setup` no Claude Code, pronto).
 >
 > Este arquivo aqui é a **documentação técnica para desenvolvedores**.
 
