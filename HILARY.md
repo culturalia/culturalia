@@ -2,11 +2,39 @@
 
 Esse é o **seu** site da Culturalia. Bora deixar ele no ar?
 
-Não se preocupa, eu (o assistente do Claude Code) te guio passo a passo. Você não precisa entender nada de código.
+Não se preocupa, eu (o Claude) te guio passo a passo. Você não precisa entender nada de código.
+
+---
+
+## Dois jeitos de conversar comigo
+
+Você pode usar o Claude de dois jeitos. Escolhe o que for mais confortável.
+
+### 🖥️ Jeito A — Claude Code (app no computador)
+
+> **Recomendado pra ação**: configurar o site, publicar mudanças, subir fotos.
+
+É um aplicativo que você instala. A vantagem: ele consegue **fazer as coisas no seu computador** — instala programas, configura serviços, publica mudanças automaticamente. Os atalhos `/setup` (pra configurar tudo do zero) e `/editar` (pra mudanças do dia-a-dia) **só funcionam aqui**.
+
+### 🌐 Jeito B — Claude pela internet ([claude.ai](https://claude.ai))
+
+> **Recomendado pra tirar dúvidas e brainstorm**: entender como algo funciona, planejar mudanças, perguntar coisas.
+
+Você abre `claude.ai` no navegador e conversa normal. Não precisa instalar nada. **A diferença**: ele não consegue executar nada no seu computador — só conversa e te orienta. Pra fazer mudanças no site, ele vai te explicar o que pedir pro Claude Code (jeito A) ou pro Guilherme.
+
+> 💡 **Pra deixar o claude.ai já contextualizado sobre seu projeto**:
+> 1. Acessa https://claude.ai e clica em **"Projects"** no menu da esquerda.
+> 2. **"Create project"** → nome: "Culturalia".
+> 3. Em **"Project knowledge"**, clica em **"Add content"** e cola o conteúdo do arquivo `CLAUDE.md` deste projeto (abre no GitHub: https://github.com/Guiradi/culturalia/blob/main/CLAUDE.md → clica no botão "Copy raw file" e cola lá).
+> 4. Pronto. Toda conversa nesse Project já vai entender quem você é e o que é a Culturalia.
 
 ---
 
 ## Antes de começar — instalar 3 programinhas (5 minutos)
+
+> Se você escolheu **só o Jeito B (claude.ai web)**, pula essa parte — não precisa instalar nada. Só lembra que pra mudanças reais no site (publicar, configurar), o Claude na web vai te orientar a chamar o Guilherme ou a usar o Claude Code.
+
+> Se vai usar o **Jeito A (Claude Code app)**, instala os 3 programas abaixo.
 
 São gratuitos. Você só precisa baixar e instalar, sem pensar.
 
@@ -108,13 +136,27 @@ Espera 5 minutos. Se ainda não, atualiza a página com **Ctrl+F5** (Windows) ou
 
 ---
 
+## Resumo: o que usar quando
+
+| Você quer...                                            | Use                                       |
+|---------------------------------------------------------|-------------------------------------------|
+| Colocar o site no ar pela primeira vez                  | Claude Code (app) → `/setup`              |
+| Mudar texto, foto, cor (publicar mudança real)          | Claude Code (app) → `/editar`             |
+| Editar agenda, espetáculos, eventos                     | Sanity Studio (link no fim do `/setup`)   |
+| Tirar dúvida ("como funciona X?", "o que significa Y?") | claude.ai (web) — mais rápido pra perguntar |
+| Pensar/planejar uma mudança antes de fazer              | claude.ai (web)                           |
+| Algo deu errado / quebrou                               | Guilherme (e-mail abaixo)                 |
+
+---
+
 ## Contatos
 
 - **Guilherme** (desenvolvedor): `guilherme.ponsoni@upoutsourcing.com`
 - **Site**: https://culturalia.art.br *(quando o domínio estiver configurado)*
 - **Sanity Studio**: URL que o `/setup` te dá no final.
 - **GitHub do site**: https://github.com/Guiradi/culturalia
+- **Claude na web**: https://claude.ai
 
 ---
 
-Boa sorte! 💜 Qualquer dúvida, me chama (`/editar` aqui mesmo, ou Guilherme pra coisas mais técnicas).
+Boa sorte! 💜 Qualquer dúvida, me chama (no app: `/editar`; na web: claude.ai; pro Guilherme: e-mail acima).
