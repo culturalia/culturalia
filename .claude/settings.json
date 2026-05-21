@@ -43,7 +43,8 @@
       "Bash(mkdir:*)",
       "Bash(curl -s:*)",
       "Bash(curl -sL:*)",
-      "Bash(magick:*)"
+      "Bash(magick:*)",
+      "Bash(rm -f .git/index.lock)"
     ],
     "deny": [
       "Bash(git push --force:*)",

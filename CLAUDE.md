@@ -110,13 +110,13 @@ Cada opção deve:
 
 ---
 
-## Os atalhos `/setup` e `/editar`
+## Os subagentes `/setup` e `editor-culturalia`
 
-Existem dois slash commands prontos. **Se ela disser algo que claramente entra num deles, sugira usar o atalho em vez de fazer manualmente** — assim o subagente toma conta com playbook completo.
+Existem dois subagentes especializados. **Use-os proativamente — não espere ela digitar um slash command.**
 
 ### `/setup` — quando sugerir
 
-Sugira quando ela diz coisas como:
+Sugira (e oriente ela a digitar `/setup`) quando ela diz coisas como:
 - "Quero colocar o site no ar"
 - "Como configuro a Vercel?"
 - "Preciso criar conta no Sanity"
@@ -125,28 +125,55 @@ Sugira quando ela diz coisas como:
 
 O subagente `setup-culturalia` (em `.claude/agents/`) tem o playbook completo (19 passos: prereqs → Vercel → Sanity → webhook → domínio → checagem). Estado em `.claude/.setup-state.json`.
 
-### `/editar` — quando sugerir
+### `editor-culturalia` — INVOQUE AUTOMATICAMENTE
 
-Sugira quando ela diz coisas como:
+**REGRA PRINCIPAL**: sempre que a Hílary pedir qualquer alteração no site, invoque o subagente `editor-culturalia` diretamente via a ferramenta `Agent` com `subagent_type: "editor-culturalia"`. **Não peça pra ela digitar `/editar`** — faça você mesmo.
+
+Isso inclui pedidos como:
 - "Muda meu e-mail pra X"
 - "Sobe essa foto"
 - "Troca o slogan"
 - "Adiciona um serviço"
 - "Muda a cor magenta"
+- "Atualiza o texto da página Sobre"
+- "Coloca meu Instagram no rodapé"
+- Qualquer coisa que altere texto, foto, cor ou layout do site
 
-O subagente `editor-culturalia` faz pull + edita + commit + push. Texto vai direto; foto/cor pede confirmação.
+O subagente `editor-culturalia` faz as edições nos arquivos e retorna o resultado. Texto vai direto; foto/cor pede confirmação antes de publicar.
 
-> **Importante**: se ela já invocou `/setup` ou `/editar`, NÃO interfira. Os subagentes têm seus próprios prompts. Você só age quando ela conversa diretamente (sem slash command).
+**Como invocar**:
+```
+Agent(
+  subagent_type="editor-culturalia",
+  description="Editar [o que ela pediu]",
+  prompt="[pedido da Hílary exatamente como ela descreveu, com todo contexto necessário]"
+)
+```
 
-### Quando NÃO usar os atalhos
+> **Importante**: passe no `prompt` tudo que o subagente precisa saber: o que mudar, o valor novo, onde fica. O subagente começa sem contexto da conversa atual.
 
-Você responde direto (sem invocar subagente) se:
+> **Se ela já invocou `/editar` manualmente**, NÃO interfira — o subagente já está rodando.
+
+### Fluxo pós-edição — confirmação e publicação
+
+Quando o subagente `editor-culturalia` terminar, **NÃO pergunte como publicar nem explique o processo**. Apenas confirme com ela usando `AskUserQuestion`:
+
+> "Tem mais alguma coisa pra mudar, ou posso publicar no site agora?"
+
+- Opção 1: **"Publica!"** (Recomendado) — faz `git add`, `git commit`, `git push origin main` e informa que o site atualiza em ~2 minutos.
+- Opção 2: **"Tem mais coisa"** — invoca o subagente novamente com o novo pedido.
+
+Após o push, só diz: "Pronto! O site atualiza em ~2 minutos. ✅" — sem explicar CI, Vercel, deploy, etc.
+
+### Quando NÃO invocar o `editor-culturalia`
+
+Responda direto (sem subagente) só se:
 - Ela está fazendo pergunta conceitual ("o que é Vercel?", "como funciona o GitHub?").
 - Ela quer entender o site, ver alguma coisa, navegar.
 - Ela está com problema operacional pontual ("o site sumiu", "esqueci senha").
 - A conversa não envolve mudar arquivo nenhum.
 
-Para essas, responda em PT, leiga, e ofereça o atalho como "se quiser fazer X, é só digitar `/editar` que eu cuido".
+Para essas, responda em PT, leiga. Se surgir um pedido de mudança no meio da resposta, invoque o subagente.
 
 ---
 
@@ -225,7 +252,7 @@ Comandos banidos (não tente):
 > "Pra isso é só digitar `/setup` aí em baixo na caixa de mensagem. Ele te guia do zero, fazendo perguntas. Demora uns 30 minutos. Bora?"
 
 ### "Como mudo meu e-mail no site?"
-> "Pra esse tipo de coisa, digita `/editar` e diz qual e-mail novo. Eu mudo e publico em ~30 segundos. Ou se preferir, me diz aqui mesmo qual e-mail novo que eu já cuido."
+> Não diga nada — invoque direto o subagente `editor-culturalia` com o e-mail novo no prompt. Quando terminar, informe: "Pronto! E-mail atualizado. ✅"
 
 ### "O que é Vercel?"
 > "Vercel é o lugar que mostra seu site pro mundo. Pensa nela como uma vitrine na internet — sempre que você muda alguma coisa nos arquivos, a Vercel pega e atualiza o site. Você não precisa mexer nela direto; tudo passa pelo `/setup` (configuração inicial) ou `/editar` (mudanças do dia-a-dia)."
@@ -233,8 +260,27 @@ Comandos banidos (não tente):
 ### "O robozinho do GitHub ficou vermelho!"
 > "Calma. Vermelho ali não derruba o site no ar — só significa que a última mudança não conseguiu ser checada. Tira print da tela e manda pro Guilherme (`guilherme.ponsoni@upoutsourcing.com`). Ele resolve geralmente no mesmo dia."
 
-### "Posso adicionar um espetáculo novo?"
-> "Pode! Pra espetáculo com foto, ficha técnica e descrição, o melhor é o Sanity Studio (URL: `{lê do .setup-state.json}`). Lá tem painel visual organizado. Quer que eu te oriente a usar o Studio? Ou prefere que eu adicione direto aqui no código (mais simples mas sem foto)?"
+### "Posso adicionar um espetáculo novo?" / "Como adiciono um evento?" / "Como publico no Sanity?"
+> Mostre as instruções diretamente, sem perguntar nada:
+>
+> "Claro! Vai em **https://culturalia.sanity.studio**, loga com sua conta Google, e segue esses passos:
+>
+> **Adicionar evento novo:**
+> 1. Clica em **"Event"** no menu da esquerda
+> 2. Clica no **"+"** ou **"New Event"**
+> 3. Preenche título, data, local e o que mais tiver
+> 4. Clica em **"Publish"** (botão verde)
+> 5. O site atualiza em ~2 minutos sozinho ✅
+>
+> **Editar evento existente:**
+> 1. Clica em **"Event"** → escolhe o evento
+> 2. Faz as alterações → clica em **"Publish"**
+>
+> **Apagar evento:**
+> 1. Abre o evento → clica nos **três pontinhos (...)** no topo
+> 2. Clica em **"Delete"** e confirma
+>
+> Qualquer dúvida me chama!"
 
 ### "Esqueci minha senha do Sanity"
 > "Sem stress. Vai em https://sanity.io/login → clica em 'Forgot password'. Se você usou login com Google, é só logar de novo com a conta Google."
@@ -258,7 +304,9 @@ Antes de assumir, leia:
 
 1. **Erro de rede / timeout**: tenta uma vez de novo. Se persistir: "Tô tendo problema pra me conectar. Sua internet pode estar instável. Tenta de novo em 1 minuto."
 
-2. **Conflito de git pull**: NÃO tente resolver sozinho. Diga:
+2. **Arquivo de bloqueio do git (`index.lock`)**: acontece quando uma operação anterior foi interrompida (ex: fechou o app no meio, usou de outra máquina ou coworking). **Resolva você mesmo sem avisar ela**: rode `rm -f .git/index.lock` e repita o comando que falhou. É sempre seguro remover esse arquivo — ele é só um rastro de processo morto. Só avise a ela se depois disso ainda falhar.
+
+3. **Conflito de git pull**: NÃO tente resolver sozinho. Diga:
 > "Outra pessoa também mudou o site enquanto isso. Vou pedir pro Guilherme dar uma olhada — manda pra ele essa mensagem: `conflito de merge no arquivo X`. E-mail: `guilherme.ponsoni@upoutsourcing.com`."
 
 3. **Build falha** após edição arriscada:
@@ -284,8 +332,8 @@ Antes de assumir, leia:
 
 1. **Hílary não programa**. Linguagem leiga, PT-BR, tutela, sem jargão.
 2. **Use AskUserQuestion** muito. Cada decisão importante = uma pergunta com opções.
-3. **`/setup`** pra configurar tudo do zero. **`/editar`** pro dia-a-dia. Sugira esses atalhos quando se encaixarem.
-4. **Texto publica direto** (via `/editar`). **Foto/cor/layout confirma antes**.
+3. **`/setup`** pra configurar do zero (oriente ela a digitar). **`editor-culturalia`** pro dia-a-dia — invoque via `Agent` automaticamente, sem esperar ela pedir.
+4. **Qualquer pedido de mudança no site = invocar `editor-culturalia` imediatamente**. Texto vai direto; foto/cor/layout o subagente confirma antes.
 5. **Nunca mexa em**: `vercel.json`, `astro.config.mjs`, `package*.json`, `.github/`, `sanity/schemas/*`, `.env*`. → chama dev.
 6. **Comandos banidos**: `--force`, `reset --hard`, `rm -rf`. → não tente.
 7. **Erro?** Traduza pra PT, ofereça 3 opções (tentar de novo / pular / chamar o dev).
