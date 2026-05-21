@@ -95,7 +95,11 @@ body {
   font-size: var(--fs-base);
   line-height: 1.6;
   color: var(--text);
-  background: var(--bg);
+  /* Fundo com textura sutil: creme com pontilhado fino na cor azul-marinho */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle, rgba(2, 39, 101, 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -243,6 +247,20 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ============================================
+   TEXTURA DE FUNDO — padrão de pontos sutil
+   Aplicada em seções que usam o creme como fundo,
+   mantendo consistência visual em todo o site.
+   ============================================ */
+
+.bg-textured,
+.section:not([class*="bg-"]) {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle, rgba(2, 39, 101, 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
 /* ============================================
