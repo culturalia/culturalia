@@ -1,0 +1,92 @@
+# =====================================================================
+# Workflow OPCIONAL — Deploy via GitHub Actions (não usar por padrão)
+# =====================================================================
+#
+# Por padrão, este projeto usa a integração nativa Vercel<->GitHub:
+# todo push para `main` dispara um deploy automático sem precisar deste
+# arquivo. Este workflow só é necessário se você quiser:
+#   - Controlar o deploy a partir do Actions (ex: gates extras, manual approval)
+#   - Trocar de hospedagem mantendo o mesmo fluxo do Vercel CLI
+#   - Ter deploy de PRs com URL custom além da preview nativa
+#
+# COMO ATIVAR:
+# 1. Renomeie este arquivo para `ci-deploy.yml` (remova `.example`)
+# 2. Crie um token em https://vercel.com/account/tokens
+# 3. Rode `vercel link` localmente para obter ORG_ID e PROJECT_ID
+#    (saem em .vercel/project.json — esse arquivo é gitignored)
+# 4. Em GitHub: Settings -> Secrets and variables -> Actions, crie:
+#       VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+# 5. Em Vercel: Settings -> Git -> Ignored Build Step, desabilite
+#    o auto-deploy (senão o deploy acontece duas vezes em paralelo)
+#
+# =====================================================================
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy-preview:
+    name: Deploy preview (PR)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel env (preview)
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy preview
+        id: deploy
+        run: |
+          URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      - name: Comment PR with preview URL
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            Preview: ${{ steps.deploy.outputs.url }}
+
+  deploy-prod:
+    name: Deploy production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel env (production)
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy production
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
