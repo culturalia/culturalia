@@ -43,10 +43,19 @@ export const NAV = [
 export const FOUNDER = {
   name: 'Hílary Silva',
   role: 'Diretora Artística e Fundadora',
-  bio: 'Apaixonada por teatro e dança, Hílary Silva fundou a Culturalia em 2019 com o propósito de democratizar o acesso à arte e à cultura no Brasil. Sob sua direção, a produtora se consolidou como uma comunidade de amantes da arte, transformando cada apresentação em uma celebração única.',
+  bio: 'Formada em Química pela USP, Hílary Silva sempre soube que seu lugar era nas artes. Com mais de 15 anos de experiência em produção cultural — passando por eventos, festivais e projetos das mais diversas áreas —, ela fundou a Culturalia em 2019 com um propósito claro: democratizar o acesso à arte e à cultura no Brasil. Nos últimos anos, tem se dedicado especialmente a produções de teatro e musical, com um olhar sensível para a educação inclusiva. Cada espetáculo que assina é, antes de tudo, um ato de conexão.',
 } as const;
 
 export const SERVICES = [
+  {
+    slug: 'consultoria',
+    title: 'Consultoria',
+    short: 'Assessoria estratégica para artistas e produtoras.',
+    description:
+      'Consultoria em planejamento artístico, modelos de negócio para artes cênicas, estratégia de carreira para artistas e estruturação de produtoras culturais. Também oferecemos consultoria especializada em presença digital: criação de sites e portfólios online para artistas e produtores culturais que querem mostrar seu trabalho com identidade, profissionalismo e beleza.',
+    color: 'cyan',
+    icon: 'spark',
+  },
   {
     slug: 'producao-executiva',
     title: 'Produção Executiva',
@@ -82,15 +91,6 @@ export const SERVICES = [
       'Cursos, oficinas e formações em teatro, dança, voz e expressão corporal. Para artistas em formação e para o público geral que quer se aproximar das artes.',
     color: 'orange',
     icon: 'mask',
-  },
-  {
-    slug: 'consultoria',
-    title: 'Consultoria',
-    short: 'Assessoria estratégica para artistas e produtoras.',
-    description:
-      'Consultoria em planejamento artístico, modelos de negócio para artes cênicas, estratégia de carreira para artistas e estruturação de produtoras culturais.',
-    color: 'cyan',
-    icon: 'spark',
   },
 ] as const;
 
