@@ -96,6 +96,22 @@ export const SERVICES = [
 
 export const FEATURED_SHOWS = [
   {
+    slug: 'a-menina-que-inundou-o-mundo',
+    title: 'A Menina que Inundou o Mundo',
+    tagline: 'Musical',
+    year: '2026',
+    venue: 'Teatro Sérgio Cardoso',
+    // Aparece em destaque no lugar do ano: "Temporada 2026 no Teatro Sérgio Cardoso".
+    season: 'Temporada 2026 no Teatro Sérgio Cardoso',
+    duration: '',
+    description:
+      'Musical para toda a família, em temporada no Teatro Sérgio Cardoso, em São Paulo, desde 10 de outubro de 2026. Um projeto realizado com apoio do Ministério da Cultura.',
+    color: 'orange',
+    image: '/images/a-menina-que-inundou-o-mundo/01.jpg',
+    gallery: ['/images/a-menina-que-inundou-o-mundo/01.jpg', '/images/a-menina-que-inundou-o-mundo/02.jpg', '/images/a-menina-que-inundou-o-mundo/03.jpg', '/images/a-menina-que-inundou-o-mundo/04.jpg', '/images/a-menina-que-inundou-o-mundo/05.jpg', '/images/a-menina-que-inundou-o-mundo/06.jpg'],
+    photoCredit: 'Denny Naka',
+  },
+  {
     slug: 'jazz-it-up',
     title: 'Jazz It Up',
     tagline: 'Musical',
@@ -105,17 +121,24 @@ export const FEATURED_SHOWS = [
     description:
       'Uma celebração ao jazz com música ao vivo, dança e teatro em um espetáculo que faz o público mergulhar na efervescência das casas noturnas dos anos 20.',
     color: 'magenta',
+    image: '',
+    gallery: [] as string[],
+    photoCredit: '',
   },
   {
     slug: 'liberdade-liberdade',
     title: 'Liberdade, Liberdade — O Musical',
     tagline: 'Musical',
-    year: '',
+    year: '2026',
     venue: '',
     duration: '',
     description:
       'Adaptação musical do clássico de Millôr Fernandes e Flávio Rangel. Um manifesto cênico em defesa da liberdade, com elenco diverso e direção musical original.',
     color: 'royal',
+    // Foto de capa (aparece no card) e galeria (aparece na página Espetáculos).
+    image: '/images/liberdade-liberdade/03.jpg',
+    gallery: ['/images/liberdade-liberdade/01.jpg', '/images/liberdade-liberdade/02.jpg', '/images/liberdade-liberdade/03.jpg', '/images/liberdade-liberdade/04.jpg', '/images/liberdade-liberdade/05.jpg', '/images/liberdade-liberdade/06.jpg', '/images/liberdade-liberdade/07.jpg', '/images/liberdade-liberdade/08.jpg', '/images/liberdade-liberdade/09.jpg', '/images/liberdade-liberdade/10.jpg', '/images/liberdade-liberdade/11.jpg', '/images/liberdade-liberdade/12.jpg'],
+    photoCredit: 'Edgar Machado',
   },
 ] as const;
 
