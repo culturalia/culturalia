@@ -121,8 +121,9 @@ export const FEATURED_SHOWS = [
     description:
       'Uma celebração ao jazz com música ao vivo, dança e teatro em um espetáculo que faz o público mergulhar na efervescência das casas noturnas dos anos 20.',
     color: 'magenta',
-    image: '',
-    gallery: [] as string[],
+    // Foto de capa (aparece no card) e galeria (aparece na página Espetáculos).
+    image: '/images/jazz-it-up/01.jpg',
+    gallery: ['/images/jazz-it-up/01.jpg', '/images/jazz-it-up/02.jpg', '/images/jazz-it-up/03.jpg', '/images/jazz-it-up/04.jpg', '/images/jazz-it-up/05.jpg', '/images/jazz-it-up/06.jpg', '/images/jazz-it-up/07.jpg', '/images/jazz-it-up/08.jpg', '/images/jazz-it-up/09.jpg', '/images/jazz-it-up/10.jpg'],
     photoCredit: '',
   },
   {
