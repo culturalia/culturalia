@@ -101,8 +101,13 @@ export const FEATURED_SHOWS = [
     tagline: 'Musical',
     year: '2026',
     venue: 'Teatro Sérgio Cardoso',
-    // Aparece em destaque no lugar do ano: "Temporada 2026 no Teatro Sérgio Cardoso".
+    // Antiga linha de temporada. Não aparece mais quando há etiqueta (badge),
+    // pra não repetir "Teatro Sérgio Cardoso" duas vezes.
     season: 'Temporada 2026 no Teatro Sérgio Cardoso',
+    // Etiqueta que aparece na foto do card (home) e embaixo do título (Espetáculos).
+    badge: 'Em cartaz · Out–Nov 2026 · Teatro Sérgio Cardoso',
+    // true = etiqueta em destaque (magenta, com bolinha piscando de "em cartaz").
+    nowPlaying: true,
     duration: '',
     description:
       'Musical para toda a família, em temporada no Teatro Sérgio Cardoso, em São Paulo, desde 10 de outubro de 2026. Um projeto realizado com apoio do Ministério da Cultura.',
@@ -121,6 +126,8 @@ export const FEATURED_SHOWS = [
     description:
       'Uma celebração ao jazz com música ao vivo, dança e teatro em um espetáculo que faz o público mergulhar na efervescência das casas noturnas dos anos 20.',
     color: 'magenta',
+    badge: 'Circulação SP · Jun–Ago 2024',
+    nowPlaying: false,
     // Foto de capa (aparece no card) e galeria (aparece na página Espetáculos).
     image: '/images/jazz-it-up/01.jpg',
     gallery: ['/images/jazz-it-up/01.jpg', '/images/jazz-it-up/02.jpg', '/images/jazz-it-up/03.jpg', '/images/jazz-it-up/04.jpg', '/images/jazz-it-up/05.jpg', '/images/jazz-it-up/06.jpg', '/images/jazz-it-up/07.jpg', '/images/jazz-it-up/08.jpg', '/images/jazz-it-up/09.jpg', '/images/jazz-it-up/10.jpg'],
@@ -136,6 +143,8 @@ export const FEATURED_SHOWS = [
     description:
       'Adaptação musical do clássico de Millôr Fernandes e Flávio Rangel. Um manifesto cênico em defesa da liberdade, com elenco diverso e direção musical original.',
     color: 'royal',
+    badge: 'Mar–Abr 2026',
+    nowPlaying: false,
     // Foto de capa (aparece no card) e galeria (aparece na página Espetáculos).
     image: '/images/liberdade-liberdade/03.jpg',
     gallery: ['/images/liberdade-liberdade/01.jpg', '/images/liberdade-liberdade/02.jpg', '/images/liberdade-liberdade/03.jpg', '/images/liberdade-liberdade/04.jpg', '/images/liberdade-liberdade/05.jpg', '/images/liberdade-liberdade/06.jpg', '/images/liberdade-liberdade/07.jpg', '/images/liberdade-liberdade/08.jpg', '/images/liberdade-liberdade/09.jpg', '/images/liberdade-liberdade/10.jpg', '/images/liberdade-liberdade/11.jpg', '/images/liberdade-liberdade/12.jpg'],
